@@ -1,0 +1,138 @@
+# Modified for BÉPO support
+# Modified from https://github.com/chinesepeanut configuration.
+# https://gitlab.com/chinesepeanuts/dotfiles/blob/b446f61efccc89bfc66226441bcaabd96f518955/skhd/skhdr
+#
+# The main difference in the way i impliment these bindings is i want to immediately
+# exit the modal selector once an action has been completed. 
+#
+# The following configuration heavily leverages modal keymaps to minimize the
+# pollution of global keybindings. In addition, the modal keymaps facilitate
+# the consistent use of the same keybindings across different modes. For
+# example, this configuration uses 'h', 'l', 'j', and 'k' to represent west,
+# east, south, and north when: changing focus, warping windows, resizing
+# windows, swapping windows, and moving floating windows. Those four keys are
+# mapped differently depending on the current mode to provide a consistent user
+# experience.
+# 
+# Six different modes are provided in this configuration in addition to the
+# default mode. The modes are tailored to their respective operations. Common
+# operations are generally available without the need of any modifier keys.
+# When modifier keys are used, they are for infrequent actions or size related
+# actions. Entry into the modal system is via Ctrl - e, which enters FOCUS
+# mode. From there, any of the other modes can be activated with a single
+# keypress.
+#
+#
+# The following is a high-level summary of the keybindngs:
+#
+# GLOBAL KEYBINDINGS:
+#                    ctrl - e    Enter FOCUS mode
+#                   ctrl - return    Open an Hyper
+#                    cmd - return    Open a floating Hyper 
+#
+#
+# KEYBINDINGS AVAILABLE IN ALL MODES:
+#                          escape    Exit current mode
+#                               f    Enter FOCUS mode
+#                               g    Enter GRID mode
+#                               w    Enter SWAP mode
+#                               e    Enter RESIZE mode
+#                               a    Enter WARP mode
+#                       shift - a    Enter WARP NO FOLLOW mode
+#
+#                               q    Close window
+#                               u    Eq_u_alize window sizes
+#                               m    Toggle fullscreen
+#                               o    Toggle offset
+#                               p    Toggle parent zoom
+#                               i    Toggle split
+#                               r    Toggle float
+#                               x    Mirror horizontal
+#                               y    Mirror vertical
+#                           g    Rotate desktop 90
+#                   shift - c    Rotate desktop 270
+#
+#
+# FOCUS MODE KEYBINDINGS:
+#               h, j, k, l    Focus window (west, south, north, east)
+#                cmd + h, j, k, l    Set insertion point (west, south, north, east)
+#       1, 2, 3, tab, shift - tab    Focus monitor (1, 2, 3, next, prev)
+# cmd + 1, 2, 3, tab, shift - tab    Focus desktop (1, 2, 3, next, prev)
+#                         cmd - è    Float next window
+#                    cmd - return    Cancel insertion point and float next window
+#                   cmd + b, m, f    Set desktop layout mode (bsp, monacle, float)
+#
+#
+# WARP MODE KEYBINDINGS:
+#               h, j, k, l    Warp window (west, south, north, east)
+#       1, 2, 3, tab, shift - tab    Warp to monitor (1, 2, 3, next, prev) and follow
+# cmd + 1, 2, 3, tab, shift - tab    Warp to desktop (1, 2, 3, next, prev) and follow
+#
+#
+# WARP NO FOLLOW MODE KEYBINDINGS:
+#               h, j, k, l    Warp window (west, south, north, east)
+#       1, 2, 3, tab, shift - tab    Warp to monitor (1, 2, 3, next, prev) and do not follow
+# cmd + 1, 2, 3, tab, shift - tab    Warp to desktop (1, 2, 3, next, prev) and do not follow
+#
+#
+# SWAP MODE KEYBINDINGS:
+#               h, j, k, l    Swap window (west, south, north, east)
+#
+#
+# RESIZE MODE KEYBINDINGS:
+#                      h, j, k, l    Increase window (west, south, north, east)
+#              shift + h, j, k, l    Decrease window (west, south, north, east)
+#
+#
+# GRID MODE KEYBINDINGS:
+#               h, j, k, l    Resize & move floating window (left, bottom, top, right)
+#      shift + return, h, j, k, l    Resize smaller & move floating window (center, left, bottom, top, right)
+#        cmd + return, h, j, k, l    Resize even smaller & move floating window (center, top-left, bottom-left, bottom-right, top-right)
+#
+:: default  : echo -n " default mode" 
+:: focus  @ : echo -n " focus mode"       # Focus window, desktop, monitors
+:: grid   @ : echo -n " grid mode"     # Floating window layout
+:: swap   @ : echo -n " swap mode"    # Swap windows
+:: warp   @ : echo -n " warp mode"     # Warp and send to desktop/monitors
+:: warpnf @ : echo -n " warp, no focus mode"    # Same, but don't follow focus
+:: resize @ : echo -n " resize mode"    # Resize window operations
+
+# CTRL-v is the global hotkey to toggle in/out of modal mode. Entry is
+# always to FOCUS mode. Getting out of any mode can also be done with ESCAPE.
+default                                 < ctrl - e      ; focus
+focus, grid, swap, warp, warpnf, resize < ctrl - e      ; default
+focus, grid, swap, warp, warpnf, resize < escape        ; default
+
+# Once in FOCUS mode (or any other mode other than default), you can switch
+# modes with single keystroke. (mnemonic: letter corresponds to first letter of
+# mode name, with exception of warpnf, which is a variant invoked with shift)
+focus, grid, swap, warp, warpnf, resize < f                 ; focus
+focus, grid, swap, warp, warpnf, resize < g                 ; grid 
+focus, grid, swap, warp, warpnf, resize < s                 ; swap
+focus, grid, swap, warp, warpnf, resize < e                 ; resize
+focus, grid, swap, warp, warpnf, resize < w                 ; warp
+focus, grid, swap, warp, warpnf, resize < shift - w         ; warpnf
+
+# Change focus using standard vi directional keys. Enter changes focus to the
+# biggest window. You'll see this theme repeated over and over again. Since this
+# is such a common operation, no modifier keys are used.
+focus           < k                 : yabai -m window --focus north; skhd -k "ctrl - e"
+focus           < j                 : yabai -m window --focus south; skhd -k "ctrl - e"
+focus           < l                 : yabai -m window --focus east; skhd -k "ctrl - e"
+focus           < h                 : yabai -m window --focus west; skhd -k "ctrl - e"
+focus           < shift - l         : yabai -m space --focus next
+focus           < shift - h         : yabai -m space --focus prev
+
+# Swap windows using standard vi directional keys. 
+swap            < k                 : yabai -m window --swap north
+swap            < j                 : yabai -m window --swap south
+swap            < l                 : yabai -m window --swap east
+swap            < h                 : yabai -m window --swap west
+
+# Warp windows using standard vi directional keys. 
+warp            < k                 : yabai -m window --warp north
+warp            < j                 : yabai -m window --warp south
+warp            < l                 : yabai -m window --warp east
+warp            < h                 : yabai -m window --warp west
+
+# Continue working on the above using the link provided at top of file. 
