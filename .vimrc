@@ -145,6 +145,11 @@ autocmd filetype sql iabbrev <buffer> exists EXISTS
 autocmd filetype sql iabbrev <buffer> set SET
 autocmd filetype sql iabbrev <buffer> default DEFAULT
 
+augroup Markdown
+  autocmd!
+  autocmd FileType markdown set wrap
+augroup END
+
 " functions
 " vimgrep magic
 vnoremap vim y:execute 'vimgrep /\V' . substitute(escape(@@, '/\'),"\n",'\\n','ge') . '/ %:h/**/*'
