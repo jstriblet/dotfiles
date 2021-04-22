@@ -12,6 +12,7 @@ autoload -Uz compinit && compinit
 
 alias vim='nvim'
 alias ls='ls -a'
+alias ssh='ssh -X'
 
 # syntax highlighting 
 # brew install zsh-syntax-highlighting

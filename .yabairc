@@ -25,14 +25,17 @@ yabai -m config mouse_drop_action            swap
 
 # general space settings
 yabai -m config layout                       bsp
-yabai -m config top_padding                  50
-yabai -m config bottom_padding               50
-yabai -m config left_padding                 50
-yabai -m config right_padding                50
-yabai -m config window_gap                   50
+yabai -m config top_padding                  10
+yabai -m config bottom_padding               10
+yabai -m config left_padding                 10
+yabai -m config right_padding                10
+yabai -m config window_gap                   10
 
 # float system preferences
 yabai -m rule --add app="^System Preferences$" manage=off
 yabai -m rule --add app="^ExpanDrive$" manage=off
+yabai -m rule --add app="^CalendarWidgetExtension$" manage=off
+yabai -m rule --add app="^CalendarAgent$" manage=off
 
 echo "yabai configuration loaded.."
+brew install yabai --HEAD

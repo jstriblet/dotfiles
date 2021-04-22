@@ -23,6 +23,7 @@ set ignorecase
 set cursorline
 set smartcase
 set smartindent
+set inccommand=nosplit
 set cindent
 set nowrap
 set spell spelllang=en_us
@@ -35,6 +36,7 @@ set wildignorecase
 set formatoptions-=o
 set formatoptions-=q
 set formatoptions-=l
+set nrformats+=alpha
 packadd! matchit " turn on find matching bracket
 set timeoutlen=1000 ttimeoutlen=0
 set showcmd
@@ -50,7 +52,7 @@ set statusline+=%#cursorlinenr#
 set statusline+=\ %f
 set statusline+=%= "right side settings
 set statusline+=%#search#
-set statusline+=\ %l/%l
+set statusline+=\ %l/%L
 set statusline+=\ [%c]
 
 " key-bindings
@@ -58,8 +60,8 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap H 0
 nnoremap L $
-nnoremap J 20j
-vnoremap J 20j
+"nnoremap J 20j
+"vnoremap J 20j
 nnoremap K 20k
 vnoremap K 20k
 nnoremap cs :noh<cr>

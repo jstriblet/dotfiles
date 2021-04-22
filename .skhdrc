@@ -109,9 +109,15 @@ focus, grid, swap, warp, warpnf, resize < escape        ; default
 focus, grid, swap, warp, warpnf, resize < f                 ; focus
 focus, grid, swap, warp, warpnf, resize < g                 ; grid 
 focus, grid, swap, warp, warpnf, resize < s                 ; swap
-focus, grid, swap, warp, warpnf, resize < e                 ; resize
+focus, grid, swap, warp, warpnf, resize < i                 ; resize
 focus, grid, swap, warp, warpnf, resize < w                 ; warp
 focus, grid, swap, warp, warpnf, resize < shift - w         ; warpnf
+
+# The following keybindings are available in all modes.
+focus, grid, swap, warp, warpnf, resize < u                 : yabai -m space --balance                    # mnemonic: eq_u_alize
+focus, grid, swap, warp, warpnf, resize < r                 : yabai -m space --rotate 90                  # mnemonic: r_otate
+focus, grid, swap, warp, warpnf, resize < shift - r         : yabai -m space --rotate 270                 # mnemonic: r_otate
+
 
 # Change focus using standard vi directional keys. Enter changes focus to the
 # biggest window. You'll see this theme repeated over and over again. Since this
@@ -134,5 +140,9 @@ warp            < k                 : yabai -m window --warp north
 warp            < j                 : yabai -m window --warp south
 warp            < l                 : yabai -m window --warp east
 warp            < h                 : yabai -m window --warp west
+
+# Resize windows using standard vi directional keys. 
+resize            < k                 : yabai -m window --resize left:20:0; yabai -m window --resize right:20:0
+resize            < j                 : yabai -m window --resize right:-20:0; yabai -m window --resize left:-20:0
 
 # Continue working on the above using the link provided at top of file. 
